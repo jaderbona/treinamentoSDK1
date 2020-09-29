@@ -1,0 +1,26 @@
+{
+    "P3j5slIMb1JFHcmPayrollCreateMergeDismissalMovimentation": {
+        "lambda": {
+            "headers": {
+                "X-Senior-Token": "bearer caf9bd073d3314943880dfe487c41b46"
+            },
+            "body": {
+                "id": "1F3EF790D6E05206AD9CBEF647C96978",
+                "dateWhen": "2021-02-01",
+                "payday": "2021-02-10",
+                "employee": {
+                    "id": "8A1C03BDF4704D1F962311EE3BABB646"
+                },
+                "workedDays": "1",
+                "resignationReason": {
+                    "id": "22BDC17B8B924636962FFB06558F8DAE"
+                },
+                "dismissalReason": {
+                    "id": "916C19DCB71E4D3190C2E69B4EDAC222"
+                },
+                "replacementOfVacancy": "false",
+                "dischargeTerm": "NOT_APPLICABLE"
+            }
+        }
+    }
+}
