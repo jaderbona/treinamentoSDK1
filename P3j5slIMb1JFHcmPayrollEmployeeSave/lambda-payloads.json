@@ -2,7 +2,7 @@
     "P3j5slIMb1JFHcmPayrollEmployeeSave": {
         "lambda": {
             "headers": {
-                "X-Senior-Token": "bearer caf9bd073d3314943880dfe487c41b46"
+                "X-Senior-Token": "Bearer 5b8504a0294a7e0be9fb6b73dc4926ce"
             },
             "body": {
                 "sheetContract": {
@@ -116,7 +116,7 @@
                     },
                     "employee": {
                         "tableId": "8A1C03BDF4704D1F962311EE3BABB646",
-                        "name": "Pedro Alencar"
+                        "name": "Pedro jose Alencar"
                     },
                     "contractType": {
                         "key": "Manager",
@@ -124,7 +124,7 @@
                     },
                     "person": {
                         "tableId": "D00A4DC01B5547BAA78676A4E8A82BF4",
-                        "name": "Pedro Alencar"
+                        "name": "Pedro jorge Alencar"
                     }
                 },
                 "sheetPersona": {

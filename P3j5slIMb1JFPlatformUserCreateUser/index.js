@@ -5,6 +5,8 @@
  * Nome do serviço : user
  * Nome do tenant : trn06325988
  **/
+ 
+ const axios = require('axios');
 
 exports.handler = async (event) => {
     return sendRes(200, JSON.parse(event.body));

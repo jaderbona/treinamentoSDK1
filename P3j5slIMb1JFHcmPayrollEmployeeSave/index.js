@@ -20,6 +20,64 @@ exports.handler = async event => {
         }
     });
 
+    /* 
+     ** Prova SDK
+     ** CONSULTOR JADER BONA
+     ** TRATAMENTO DAS OBRIGATORIEDADES DA GUIA CONTRATO 
+     ** 
+     ** -- PARTE 01 -- Questão com escopo fechado.
+    */
+    
+    // Tratamento da obrigatoriedade do NÚMERO DA MATRICULA 
+    if(!body.sheetContract.registernumber){
+        return sendRes(400,'A matrícula do colaborador deve ser informada!');
+    } 
+   
+   // Tratamento para  não permitir realizar uma Admissão com o campo "Indicativo de Admissão" com o valor diferente de "Normal".
+   if (body.sheetContract.admissionOriginType.key !== "NORMAL"){
+        return sendRes(400,'Não é permitido realizar uma Admissão com o campo "Indicativo de Admissão" com o valor diferente de "Normal!'); 
+    }
+   
+    /* Não permitir alteração do NOME DO COLABORADOR */
+    if(body.sheetInitial.employee) {//Valida apenas quando for uma alteração de registro.                                                                                         
+        let employee = await instance.get(`/hcm/payroll/entities/employee/${body.sheetInitial.employee.tableId}`);
+        let primeiroNome =  employee.data.person.firstname;
+        let nomeMeio = employee.data.person.middlename; 
+        let nomeFinal = employee.data.person.lastname; 
+        let nomeCompleto = primeiroNome;
+    
+        if(nomeMeio){
+            nomeCompleto = nomeCompleto + " " + nomeMeio; 
+        }
+        if(nomeFinal){
+            nomeCompleto = nomeCompleto + " " + nomeFinal; 
+        }
+        
+        if(nomeCompleto !== body.sheetInitial.employee.name){
+            return sendRes(400,'Não é permitido alterar o Nome do Colaborador!'); 
+        }
+    } 
+    
+     /* Validação do tipo de colaborador EMPREGADO
+      **Validação das escalas código 1 a 10 
+      **Validação das escalas tipo Permanente
+      */
+      
+    if(body.sheetContract.employeeType.key == 'EMPLOYEE'){
+        let escala = await instance.get(`/hcm/payroll/entities/workshift/${body.sheetWorkSchedule.workshift.tableId}`);
+        let codigoEscala = escala.data.code;
+        let tipoEscala = escala.data.workshiftType;
+        if (codigoEscala > 10) {
+          return sendRes(400,'Só poderá admitir o colaborador com escala entre 1 e 10!');  
+        }
+        if (tipoEscala !== "Permanent"){
+          return sendRes(400,'Só poderá informar uma escala do Tipo Permanente!');  
+        }
+    } 
+    
+    
+    /** EXERCICIOS DESENVOLVIDOS EM SALA DE AULA **/
+    
     /* Valida tamanho do apelido */
     if(body.sheetPersona.nickname) {
         if(body.sheetPersona.nickname.length > 10) {
@@ -40,7 +98,8 @@ exports.handler = async event => {
     if(!body.sheetPersona.attachment){
         return sendRes(400,'A foto do colaborador deve ser informada!');
     } 
-
+    
+    
     /* Não permite alteração de CPF */
     if(body.sheetInitial.employee) {
         let employee = await instance.get(`/hcm/payroll/entities/employee/${body.sheetInitial.employee.tableId}`);
